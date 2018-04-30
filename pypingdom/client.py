@@ -10,7 +10,7 @@ from .maintenance import Maintenance
 class Client(object):
     """Interact with API and GUI."""
 
-    def __init__(self, username, password, apikey, email, api_version='2.0'):
+    def __init__(self, username, password, apikey, email, api_version='2.1'):
         """
         Initializer.
 
@@ -79,11 +79,10 @@ class Client(object):
     def get_maintenances(self, filters=None):
         if filters is None:
             filters = {}
-        self.gui.login()
-        url = "https://my.pingdom.com/newims/maintenance/xhr?limit=10000&page_id=1&_=1489571119019"
-        response = self.gui.send("get", url)
+
+        response = self.api.send(method='get', resource='maintenance')
         res = []
-        for obj in response.json()['events']:
+        for obj in response['maintenance']:
             if "checks" in filters:
                 wanted_ids = [check._id for check in filters['checks']]
                 got_ids = [int(x['compound_id']) for x in obj['checks']]

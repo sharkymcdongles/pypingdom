@@ -24,6 +24,7 @@ pip-log.txt
 .coverage
 .tox
 
+venv
 .DS_Store
 private_test_data.yml
 .envrc
